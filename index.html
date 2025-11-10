@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diagnostic Panel — Windows Old Style (Silver/Gray)</title>
+<style>
+/* --- Retro Windows old-style silver/gray theme --- */
+:root{
+  --bg:#cfcfcf;
+  --panel:#e6e6e6;
+  --panel-2:#d0d0d0;
+  --accent:#bdbdbd;
+  --shadow:#999;
+  --text:#111;
+  --titlebar:#bfc6cb;
+  --titlebar-text:#0b2028;
+  --popup-bg: rgba(230,230,230,0.98);
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+html,body{height:100%;margin:0;background:var(--bg);}
+.app{width:100%;height:100%;display:flex;gap:12px;padding:18px;box-sizing:border-box;}
+
+/* Left: 70% photo area */
+.left{
+  flex:7;background:linear-gradient(180deg,var(--panel) 0%, var(--panel-2) 100%);
+  border:2px solid var(--accent);box-shadow:inset 2px 2px 0 var(--shadow),inset -2px -2px 0 #fff;
+  border-radius:6px;position:relative;overflow:hidden;padding:12px;
+}
+.window-title{
+  display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:4px;
+  background:linear-gradient(180deg,var(--titlebar),#e0e6ea);
+  box-shadow:0 1px 0 #fff inset,0 -1px 0 rgba(0,0,0,0.05) inset;
+  font-weight:700;color:var(--titlebar-text);margin-bottom:10px;border:1px solid var(--accent);
+}
+.title-icon{width:18px;height:18px;background:linear-gradient(180deg,#fff,#ccc);border:1px solid var(--shadow);display:inline-block;border-radius:2px}
+
+.photo-area{
+  width:calc(100% );height:calc(100% - 58px);display:flex;align-items:center;justify-content:center;
+  border-radius:4px;padding:20px;box-sizing:border-box;text-align:center;color:var(--text);
+}
+.photo-area .fake-photo{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  border:12px solid #bfbfbf;background:linear-gradient(180deg,#f7f7f7,#ddd);
+  box-shadow:6px 6px 0 rgba(0,0,0,0.06);border-radius:3px;font-size:28px;color:#666;
+}
+
+/* Right: 30% sidebar */
+.right{flex:3;display:flex;flex-direction:column;gap:12px}
+.panel{background:var(--panel);border:2px solid var(--accent);padding:10px;border-radius:6px;box-shadow:inset 2px 2px 0 var(--shadow);}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{
+  display:flex;align-items:center;justify-content:center;padding:12px;font-weight:600;border:2px solid #fff;cursor:pointer;
+  background:linear-gradient(180deg,#f6f6f6,#dcdcdc);box-shadow:2px 2px 0 var(--shadow);
+  border-radius:4px;border-left:4px solid #fff;border-top:4px solid #fff;border-right:4px solid rgba(0,0,0,0.05);
+  user-select:none;text-align:center;
+}
+.btn:active{transform:translateY(1px);}
+.next-page{margin-top:8px;padding:10px;text-align:center;border-radius:4px;border:2px solid var(--accent);
+background:linear-gradient(180deg,#e9e9e9,#cfcfcf);cursor:pointer;font-weight:700}
+
+/* Popup */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.25);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.popup{width:520px;max-width:calc(100% - 40px);background:var(--popup-bg);
+border:2px solid var(--accent);box-shadow:8px 8px 0 rgba(0,0,0,0.12);border-radius:6px;overflow:hidden}
+.popup .titlebar{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;
+background:linear-gradient(180deg,#c8cdd0,#e9ecef);border-bottom:1px solid var(--accent)}
+.popup .titlebar .controls{display:flex;gap:6px}
+.popup .content{padding:14px;max-height:400px;overflow-y:auto}
+.popup .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.popup .item{padding:10px;border:1px solid #bdbdbd;background:linear-gradient(180deg,#f7f7f7,#e3e3e3);border-radius:4px;text-align:center;cursor:pointer;}
+.popup .item:hover{background:#dcdcdc}
+
+/* Solution Popup */
+.solution{background:#f5f5f5;border:2px solid #aaa;padding:10px;border-radius:4px;line-height:1.5;}
+
+/* Confirmation */
+.confirm{display:none;padding:12px;border-top:1px solid #bdbdbd;background:linear-gradient(180deg,#efefef,#dfdfdf);text-align:center}
+.confirm button{margin:0 8px;padding:8px 12px;border-radius:4px;border:2px solid var(--accent);
+background:linear-gradient(180deg,#f7f7f7,#dcdcdc);cursor:pointer}
+
+/* Small responsive tweaks */
+@media (max-width:800px){
+  .app{flex-direction:column;padding:10px}
+  .left,.right{flex:unset;width:100%}
+  .right{order:2}
+  .left{order:1;height:60vh}
+}
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="left panel">
+      <div class="window-title">
+        <div class="title-icon"></div>
+        <div>Jana Online Service Diagnostic Panel</div>
+        <div style="margin-left:auto;font-size:12px;opacity:0.8">version 1.0</div>
+      </div>
+      <div class="photo-area">
+        <div class="fake-photo">
+          <img src="https://st3.depositphotos.com/1003989/18160/i/450/depositphotos_181608400-stock-photo-beautiful-businesswoman-blue-business-suit.jpg" width="100%">
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="panel">
+        <div style="font-weight:800;margin-bottom:8px">Options</div>
+        <div class="options">
+          <div class="btn" data-popup="1">Computer Help Diagnostic</div>
+          <div class="btn" data-popup="2">Important Portal</div>
+          <div class="btn" data-popup="3">Tools / Utilities</div>
+          <div class="btn" data-popup="4">Personal Work</div>
+        </div>
+        <div class="next-page">Next Page »</div>
+      </div>
+
+      <div class="panel" style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-weight:800">Info</div>
+        <div style="font-size:13px;line-height:1.3">
+          Retro Windows 1.0 style interface. Silver/Gray theme. Diagnostic opens nested popups for detailed computer problem solutions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <div class="popup">
+      <div class="titlebar">
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="width:16px;height:16px;background:linear-gradient(180deg,#fff,#bbb);border:1px solid #999"></div>
+          <strong id="popup-title">Popup</strong>
+        </div>
+        <div class="controls"><button id="popup-close" title="Close">✕</button></div>
+      </div>
+      <div class="content" id="popup-content"></div>
+      <div class="confirm" id="confirm-area">
+        আপনি কি নিশ্চিতভাবে popup বন্ধ করতে চান?
+        <div style="margin-top:8px">
+          <button id="confirm-yes">Yes</button>
+          <button id="confirm-no">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// =============== DATA SETUP =================
+
+// Step 1 popup data (other 3 same)
+const popupData = {
+  1: [
+    { name: "Hardware Problem", id: "hardware" },
+    { name: "Software Problem", id: "software" },
+    { name: "Network Problem", id: "network" },
+    { name: "User Operation Problem", id: "user" }
+  ],
+  2: [
+    { name: "IRCTC Agent Interface", link: "https://www.operations.irctc.co.in/AgentInterface/loginHome.jsf" },
+    { name: "Kakdwip Hospital OPD", link: "https://example.com/b" },
+    { name: "Trade Licence Apply", link: "https://prdeodb.wb.gov.in/login" },
+    { name: "Udyan Aadhar Protal", link: "https://www.udyamregistration.gov.in/Government-India/Ministry-MSME-registration.htm" }
+  ],
+  3: [
+    { name: "Internet Speed Test", link: "https://www.speedtest.net" },
+    { name: "Whats My IP", link: "https://whatismyipaddress.com" },
+    { name: "Down Website Chack", link: "https://downdetector.in" },
+    { name: "Network Tools", link: "https://ping.eu" }
+  ],
+  4: [
+    { name: "Web Whatsapp", link: "https://web.whatsapp.com/" },
+    { name: "Facebook", link: "https://www.facebook.com/login/web/?cuid=AYilq7pUkBlOEVWysrZCzYPPPXhLNZ8xP_46764jYMWGnC_YdqP9q7dVrWxBRT-zTCOX16pblPxu_6lI8Adz0ftWe314sp1238dX3hiNoXGHMw&e=1348092" },
+    { name: "I Love PDF Conveter", link: "https://www.ilovepdf.com/" },
+   { name: "Passport Size Photo ", link: "https://https://www.cutout.pro/passport-photo-maker" },
+    { name: "remove BG", link: "https://www.ilovepdf.com/" }
+  ]
+};
+
+// Step 2 — Problem Solutions for Diagnostic
+const problemSolutions = {
+  hardware: [
+    "🔌 Power cable ও SMPS ঠিক আছে কি না চেক করুন।",
+    "💡 Monitor cable ঠিকমতো লাগানো আছে কি না দেখুন।",
+    "🧹 RAM খুলে পরিষ্কার করে লাগান।",
+    "🔋 CMOS Battery পরিবর্তন করুন।"
+  ],
+  software: [
+    "🪟 Windows Safe Mode-এ ঢুকে System Restore করুন।",
+    "💾 Error হলে প্রোগ্রাম Reinstall করুন।",
+    "🦠 Antivirus দিয়ে Full Scan করুন।",
+    "🧹 Temp ফাইল মুছে দিন (%temp%)।"
+  ],
+  network: [
+    "📶 Router restart করুন।",
+    "🔌 LAN cable ঠিক আছে কি না দেখুন।",
+    "⚙️ ipconfig /renew দিন।",
+    "☎️ ISP এর সাথে যোগাযোগ করুন।"
+  ],
+  user: [
+    "🗑️ Recycle Bin এ মুছে যাওয়া ফাইল দেখুন।",
+    "📂 Backup রাখুন পরিবর্তনের আগে।",
+    "🚫 অচেনা সফটওয়্যার install করবেন না।",
+    "⚠️ Delete করলে সাথে সাথে ব্যবহার বন্ধ রাখুন।"
+  ]
+};
+
+// =============== SCRIPT =================
+const buttons = document.querySelectorAll('.btn');
+const overlay = document.getElementById('overlay');
+const popupTitle = document.getElementById('popup-title');
+const popupContent = document.getElementById('popup-content');
+const popupClose = document.getElementById('popup-close');
+const confirmArea = document.getElementById('confirm-area');
+const confirmYes = document.getElementById('confirm-yes');
+const confirmNo = document.getElementById('confirm-no');
+let pendingClose = false;
+
+function openPopup(id){
+  confirmArea.style.display = 'none';
+  overlay.style.display = 'flex';
+  popupTitle.textContent = 'Options';
+  popupContent.innerHTML = '';
+
+  const data = popupData[id];
+  if(!data){ popupContent.textContent = "No data."; return; }
+
+  // Diagnostic special
+  if(id == 1){
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    data.forEach(item=>{
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = item.name;
+      div.onclick = ()=>openSolution(item.id, item.name);
+      grid.appendChild(div);
+    });
+    popupContent.appendChild(grid);
+  }else{
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    data.forEach(item=>{
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.textContent = item.name;
+      div.onclick = ()=>window.open(item.link,'_blank');
+      grid.appendChild(div);
+    });
+    popupContent.appendChild(grid);
+  }
+}
+
+function openSolution(problemId, title){
+  popupContent.innerHTML = `<div class='solution'><b>${title} সমাধান:</b><br><br>` +
+    problemSolutions[problemId].map(step=>"• "+step).join("<br>") +
+    "</div>";
+  popupTitle.textContent = title + " — Step by Step";
+}
+
+function tryClosePopup(){
+  confirmArea.style.display = 'block';
+  pendingClose = true;
+}
+
+popupClose.onclick = tryClosePopup;
+confirmNo.onclick = ()=>confirmArea.style.display='none';
+confirmYes.onclick = ()=>{
+  overlay.style.display='none';
+  confirmArea.style.display='none';
+  pendingClose=false;
+};
+overlay.addEventListener('click',e=>{if(e.target===overlay)tryClosePopup();});
+buttons.forEach(b=>b.onclick=()=>openPopup(b.dataset.popup));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape' && overlay.style.display==='flex')tryClosePopup();
+});
+document.querySelector('.next-page').onclick=()=>alert('Next Page coming soon!');
+</script>
+</body>
+</html>
